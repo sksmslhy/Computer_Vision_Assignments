@@ -3,8 +3,8 @@
 컴퓨터비전(55381) 강의 Assignment의 Code를 업로드하는 Repository입니다.
 
 ### 🙋‍♂️ Our Team
-- **이나혁** [소프트웨어학부 3학년, nahyuk0113_at_cau.ac.kr]
-- **유승욱** [소프트웨어학부 3학년, _at_cau.ac.kr]
+- **유승욱** [소프트웨어학부 3학년,_bokju128at_cau.ac.kr]
+- **이나혁** [소프트웨어학부 3학년, nahyuk0113_at_cau.ac.kr, **조장**]
 - **이하윤** [소프트웨어학부 3학년, hayun0406_at_cau.ac.kr] 
 
 ### 📝 List of Assignment
