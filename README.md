@@ -8,7 +8,7 @@
 - **이하윤** [소프트웨어학부 3학년, hayun0406_at_cau.ac.kr] 
 
 ### 📝 List of Assignment
-| **No** | **Weeks** | **Contents** | **Link** |
-|:--------:|:--------:|:--------:|:--------:|
-| 1 | 3rd (3/18 ~ 3/24) | SIFT를 참조한 Correlation 설정 실습 | [Link](https://github.com/NahyukLEE/Computer_Vision_Assignments/tree/main/3%E1%84%8C%E1%85%AE%E1%84%8E%E1%85%A1%20Assignment) |
-| 2 | - | Not yet :) | - |
+| **No** | **Weeks** | **Contents** | **Repository** | **Report** |
+|:--------:|:--------:|:--------:|:--------:|:--------:|
+| 1 | 3rd (3/18 ~ 3/24) | SIFT를 참조한 Correlation 설정 실습 | [Link](https://github.com/NahyukLEE/Computer_Vision_Assignments/tree/main/3%E1%84%8C%E1%85%AE%E1%84%8E%E1%85%A1%20Assignment) | [PDF]()|
+| 2 | - | Not yet :) | - | - |
