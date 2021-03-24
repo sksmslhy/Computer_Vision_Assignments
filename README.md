@@ -1,4 +1,4 @@
-# Computer_Vision_Assignments
+# Computer Vision Assignments
 
 컴퓨터비전(55381) 강의 Assignment의 Code를 업로드하는 Repository입니다.
 
