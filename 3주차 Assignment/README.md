@@ -104,7 +104,9 @@ void CallBackFunc01(int event, int x, int y, int flags, void* param)
 #### 히스토그램 비교
 히스토그램의 비교는 OpenCV에서 제공하는 지표를 활용할 수 있다. 1) Correlation, 2) Chi-Square, 3) Intersect를 이용하여 히스토그램의 비교를 수행하였고 수식과 코드는 아래와 같다.
 ##### Correlation
-$$ d(H_1, H_2 ) = \frac {\sum_I (H_1 (I)-\bar{H_1})(H_2 (I)-\bar{H_2})}{\sqrt{\sum_I (H_1 (I)-\bar{H_1})^2(H_2 (I)-\bar{H_2})^2}} $$
+$$ 
+x = x +1
+$$
 
 ```cpp
     if (compareHist(histogram_img1_0, histogram_img2_0, HISTCMP_INTERSECT) >= result)
