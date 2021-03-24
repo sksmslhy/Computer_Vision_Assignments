@@ -4,6 +4,7 @@
 
 
 ## Environment
+각 팀원의 개발 및 테스트 환경은 아래와 같습니다.
 | **Name** | **OS** | **OpenCV Library** | **Language** | **IDE** | 
 |:--------:|:--------:|:--------:|:--------:|:--------:|
 | 유승욱 | Windows 10 | OpenCV 4.5.1 | C++ | Visual Studio 2019  |
@@ -18,6 +19,7 @@ $ g++ main.cpp -o app `pkg-config --cflags --libs opencv`
 ```
 
 ## Sample Result
+샘플 결과는 아래와 같습니다. 파라미터값을 조절한 세부 결과는 Report에서 확인할 수 있습니다.
 ![](sample_result.png)
 
 ## Code Review
