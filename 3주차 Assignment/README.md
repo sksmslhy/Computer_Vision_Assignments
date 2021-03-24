@@ -20,7 +20,7 @@ $ g++ main.cpp -o app `pkg-config --cflags --libs opencv`
 
 ## Sample Result
 샘플 결과는 아래와 같습니다. 파라미터값을 조절한 세부 결과는 Report에서 확인할 수 있습니다.
-![](sample_result.png)
+![](final_result.png)
 
 ## Code Review
 
