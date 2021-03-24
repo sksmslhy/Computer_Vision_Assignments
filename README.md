@@ -4,7 +4,7 @@
 
 ### 🙋‍♂️ Our Team
 - **이나혁** [소프트웨어학부 3학년, nahyuk0113_at_cau.ac.kr]
-- **유승욱** [소프트웨어학부 3학년, 승욱메일_at_cau.ac.kr]
+- **유승욱** [소프트웨어학부 3학년, _at_cau.ac.kr]
 - **이하윤** [소프트웨어학부 3학년, 하윤메일_at_cau.ac.kr] 
 
 ### 📝 List of Assignment
