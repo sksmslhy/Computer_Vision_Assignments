@@ -181,112 +181,93 @@ int main() {
     int img01_2_to = 0;
     int img01_3_to = 0;
 
-    result = 0.0;
-    if (compareHist(histogram_img1_0, histogram_img2_0, HISTCMP_INTERSECT) >= result)
-    {
-        img01_0_to = 0;
-        result = compareHist(histogram_img1_0, histogram_img2_0, HISTCMP_INTERSECT);
-    }
+    result = compareHist(histogram_img1_0, histogram_img2_0, HISTCMP_CORREL);
     
-    if (compareHist(histogram_img1_0, histogram_img2_1, HISTCMP_INTERSECT) >= result)
+    if (compareHist(histogram_img1_0, histogram_img2_1, HISTCMP_CORREL) >= result)
     {
         img01_0_to = 1;
-        result = compareHist(histogram_img1_0, histogram_img2_1, HISTCMP_INTERSECT);
+        result = compareHist(histogram_img1_0, histogram_img2_1, HISTCMP_CORREL);
     }
-    if (compareHist(histogram_img1_0, histogram_img2_2, HISTCMP_INTERSECT) >= result)
+    if (compareHist(histogram_img1_0, histogram_img2_2, HISTCMP_CORREL) >= result)
     {
         img01_0_to = 2;
-        result = compareHist(histogram_img1_0, histogram_img2_2, HISTCMP_INTERSECT);
+        result = compareHist(histogram_img1_0, histogram_img2_2, HISTCMP_CORREL);
     }
         
-    if (compareHist(histogram_img1_0, histogram_img2_3, HISTCMP_INTERSECT) >= result)
+    if (compareHist(histogram_img1_0, histogram_img2_3, HISTCMP_CORREL) >= result)
     {
         img01_0_to = 3;
-        result = compareHist(histogram_img1_0, histogram_img2_3, HISTCMP_INTERSECT);
+        result = compareHist(histogram_img1_0, histogram_img2_3, HISTCMP_CORREL);
     }
         
     cout << "Img01's Dot 0 to Img02's Dot " << to_string(img01_0_to) << endl;
     line(img_concat, Point(get<0>(location01[0]), get<1>(location01[0])), Point(img01.cols + get<0>(location02[img01_0_to]), get<1>(location02[img01_0_to])), Scalar::all(0), 5, 8, 0);
     
-    result = 0.0;
-    if (compareHist(histogram_img1_1, histogram_img2_0, HISTCMP_INTERSECT) >= result)
-    {
-        img01_1_to = 0;
-        result = compareHist(histogram_img1_0, histogram_img2_0, HISTCMP_INTERSECT);
-    }
+    result = compareHist(histogram_img1_1, histogram_img2_0, HISTCMP_CORREL);
         
-    if (compareHist(histogram_img1_1, histogram_img2_1, HISTCMP_INTERSECT) >= result)
+    if (compareHist(histogram_img1_1, histogram_img2_1, HISTCMP_CORREL) >= result)
     {
         img01_1_to = 1;
-        result = compareHist(histogram_img1_0, histogram_img2_1, HISTCMP_INTERSECT);
+        result = compareHist(histogram_img1_0, histogram_img2_1, HISTCMP_CORREL);
     }
         
-    if (compareHist(histogram_img1_1, histogram_img2_2, HISTCMP_INTERSECT) >= result)
+    if (compareHist(histogram_img1_1, histogram_img2_2, HISTCMP_CORREL) >= result)
     {
         img01_1_to = 2;
-        result = compareHist(histogram_img1_0, histogram_img2_2, HISTCMP_INTERSECT);
+        result = compareHist(histogram_img1_0, histogram_img2_2, HISTCMP_CORREL);
     }
         
-    if (compareHist(histogram_img1_1, histogram_img2_3, HISTCMP_INTERSECT) >= result)
+    if (compareHist(histogram_img1_1, histogram_img2_3, HISTCMP_CORREL) >= result)
     {
         img01_1_to = 3;
-        result = compareHist(histogram_img1_0, histogram_img2_3, HISTCMP_INTERSECT);
+        result = compareHist(histogram_img1_0, histogram_img2_3, HISTCMP_CORREL);
     }
         
     cout << "Img01's Dot 1 to Img02's Dot " << to_string(img01_1_to) << endl;
     line(img_concat, Point(get<0>(location01[1]), get<1>(location01[1])), Point(img01.cols + get<0>(location02[img01_1_to]), get<1>(location02[img01_1_to])), Scalar::all(0), 5, 8, 0);
     
-    result = 0.0;
-    if (compareHist(histogram_img1_2, histogram_img2_0, HISTCMP_INTERSECT) >= result)
-    {
-        img01_2_to = 0;
-        result = compareHist(histogram_img1_0, histogram_img2_0, HISTCMP_INTERSECT);
-    }
+    result = compareHist(histogram_img1_2, histogram_img2_0, HISTCMP_CORREL);
         
-    if (compareHist(histogram_img1_2, histogram_img2_1, HISTCMP_INTERSECT) >= result)
+    if (compareHist(histogram_img1_2, histogram_img2_1, HISTCMP_CORREL) >= result)
     {
         img01_2_to = 1;
-        result = compareHist(histogram_img1_0, histogram_img2_1, HISTCMP_INTERSECT);
+        result = compareHist(histogram_img1_0, histogram_img2_1, HISTCMP_CORREL);
+        
     }
         
-    if (compareHist(histogram_img1_2, histogram_img2_2, HISTCMP_INTERSECT) >= result)
+    if (compareHist(histogram_img1_2, histogram_img2_2, HISTCMP_CORREL) >= result)
     {
         img01_2_to = 2;
-        result = compareHist(histogram_img1_0, histogram_img2_2, HISTCMP_INTERSECT);
+        result = compareHist(histogram_img1_0, histogram_img2_2, HISTCMP_CORREL);
     }
         
-    if (compareHist(histogram_img1_2, histogram_img2_3, HISTCMP_INTERSECT) >= result)
+    if (compareHist(histogram_img1_2, histogram_img2_3, HISTCMP_CORREL) >= result)
     {
         img01_2_to = 3;
-        result = compareHist(histogram_img1_0, histogram_img2_3, HISTCMP_INTERSECT);
+        result = compareHist(histogram_img1_0, histogram_img2_3, HISTCMP_CORREL);
     }
         
     cout << "Img01's Dot 2 to Img02's Dot " << to_string(img01_2_to) << endl;
     line(img_concat, Point(get<0>(location01[2]), get<1>(location01[2])), Point(img01.cols + get<0>(location02[img01_2_to]), get<1>(location02[img01_2_to])), Scalar::all(0), 5, 8, 0);
     
-    result = 0.0;
-    if (compareHist(histogram_img1_3, histogram_img2_0, HISTCMP_INTERSECT) >= result)
-    {
-        img01_3_to = 0;
-        result = compareHist(histogram_img1_0, histogram_img2_0, HISTCMP_INTERSECT);
-    }
+    result = compareHist(histogram_img1_3, histogram_img2_0, HISTCMP_CORREL);
         
-    if (compareHist(histogram_img1_3, histogram_img2_1, HISTCMP_INTERSECT) >= result)
+    if (compareHist(histogram_img1_3, histogram_img2_1, HISTCMP_CORREL) >= result)
     {
         img01_3_to = 1;
-        result = compareHist(histogram_img1_0, histogram_img2_1, HISTCMP_INTERSECT);
+        result = compareHist(histogram_img1_0, histogram_img2_1, HISTCMP_CORREL);
     }
         
-    if (compareHist(histogram_img1_3, histogram_img2_2, HISTCMP_INTERSECT) >= result)
+    if (compareHist(histogram_img1_3, histogram_img2_2, HISTCMP_CORREL) >= result)
     {
         img01_3_to = 2;
-        result = compareHist(histogram_img1_0, histogram_img2_2, HISTCMP_INTERSECT);
+        result = compareHist(histogram_img1_0, histogram_img2_2, HISTCMP_CORREL);
     }
         
-    if (compareHist(histogram_img1_3, histogram_img2_3, HISTCMP_INTERSECT) >= result)
+    if (compareHist(histogram_img1_3, histogram_img2_3, HISTCMP_CORREL) >= result)
     {
         img01_3_to = 3;
-        result = compareHist(histogram_img1_0, histogram_img2_3, HISTCMP_INTERSECT);
+        result = compareHist(histogram_img1_0, histogram_img2_3, HISTCMP_CORREL);
     }
         
     cout << "Img01's Dot 3 to Img02's Dot " << to_string(img01_3_to) << endl;
