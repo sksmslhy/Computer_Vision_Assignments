@@ -18,11 +18,11 @@ $ g++ main.cpp -o app `pkg-config --cflags --libs opencv`
 ```
 
 ## Sample Result
-
+![](sample_result.png)
 
 ## Code Review
 
-#### 헤더
+### Header
 OpenCV 함수 이용을 위한 highgui, imgproc 헤더와 C++ 자료구조 사용을 위한 tuple, string 헤더를 선언
 ```cpp
 #include <iostream>
@@ -32,7 +32,8 @@ OpenCV 함수 이용을 위한 highgui, imgproc 헤더와 C++ 자료구조 사�
 #include <opencv2/imgproc.hpp>
 ```
 
-#### 영상의 히스토그램 획득 
+### Calculate Image Histogram
+Sobel Operator를 활용하여 영상 히스토그램 획득, 커널의 사이즈 수정
 ```cpp
 Mat img2histImg(Mat img){
     
@@ -66,7 +67,8 @@ Mat img2histImg(Mat img){
 }
 ```
 
-#### MouseCallBack 함수
+### MouseCallBack Function
+관심영역을 설정하고 Block 생성
 ```cpp
 void CallBackFunc01(int event, int x, int y, int flags, void* param)
 {
@@ -101,9 +103,9 @@ void CallBackFunc01(int event, int x, int y, int flags, void* param)
 }
 ```
 
-#### 히스토그램 비교
+### Comparison of Histogram
 히스토그램의 비교는 OpenCV에서 제공하는 지표를 활용, 1) Correlation, 2) Chi-Square, 3) Intersect를 이용하여 히스토그램의 비교를 수행하였고 수식과 코드는 아래와 같음
-##### Correlation
+#### Using Correlation
 ```cpp
 if (compareHist(histogram_img1_1, histogram_img2_1, HISTCMP_CORREL) >= result)
     {
@@ -112,7 +114,7 @@ if (compareHist(histogram_img1_1, histogram_img2_1, HISTCMP_CORREL) >= result)
     }
 ```
 
-##### Chi-Square
+#### Using Chi-Square
 ```cpp
 if (compareHist(histogram_img1_1, histogram_img2_1, HISTCMP_CHISQR) <= result)
     {
@@ -121,7 +123,7 @@ if (compareHist(histogram_img1_1, histogram_img2_1, HISTCMP_CHISQR) <= result)
     }
 ```
 
-##### Intersect
+#### Using Intersect
 ```cpp
 if (compareHist(histogram_img1_1, histogram_img2_1, HISTCMP_INTERSECT) >= result)
     {
@@ -130,5 +132,9 @@ if (compareHist(histogram_img1_1, histogram_img2_1, HISTCMP_INTERSECT) >= result
     }
 ```
 
+### Visualization of final result
+```cpp
+line(img_concat, Point(get<0>(location01[3]), get<1>(location01[3])), Point(img01.cols + get<0>(location02[img01_3_to]), get<1>(location02[img01_3_to])), Scalar::all(0), 5, 8, 0);
 
-
+imshow("Final Result", img_concat);
+```
