@@ -19,7 +19,7 @@ void CallBackFunc01(int event, int x, int y, int flags, void* param)
 
     if (event == EVENT_LBUTTONDOWN && count01 < 4)
     {
-        cout << "좌표 = (" << x << ", " << y << ")" << endl;
+        //cout << "좌표 = (" << x << ", " << y << ")" << endl;
         tuple<int, int> location = make_tuple(x, y);
         location01[count01] = location;
 
@@ -48,7 +48,7 @@ void CallBackFunc02(int event, int x, int y, int flags, void* param)
 
     if (event == EVENT_LBUTTONDOWN && count02 < 4)
     {
-        cout << "좌표 = (" << x << ", " << y << ")" << endl;
+        //cout << "좌표 = (" << x << ", " << y << ")" << endl;
         tuple<int, int> location = make_tuple(x, y);
         location02[count02] = location;
 
@@ -93,7 +93,6 @@ int main() {
     waitKey(0);
     
     /** 호모그래피 계산 **/
-    
     int x1 = get<0>(location01[0]);
     int y1 = get<1>(location01[0]);
     int x2 = get<0>(location01[1]);
@@ -169,7 +168,35 @@ int main() {
     A.at<float>(7, 7) = y4 * y4_p;
     A.at<float>(7, 8) = y4_p;
 
-    cout << A << endl;
+
+    // DLT 이용 -> Ah = 0 을 푸는 문제
+    Mat U, D, VT, V;
+
+    // h를 구하려면 행렬 A에 대한 SVD를 구해야 함; U D VT = A 
+    SVDecomp(A, U, D, VT, SVD::FULL_UV);
+
+    // 행렬 VT를 전치하여 V 획득
+    transpose(VT, V);
+
+    // h(9X1)는 행렬 V의 오른쪽 끝 Row 벡터  
+    Mat H_row = V.col(8);
+    
+    // 열 벡터 형태의 h를 3X3 사이즈의 H 행렬로 전환
+    Mat H = Mat::zeros(3, 3, CV_32F);
+    H.at<float>(0, 0) = H_row.at<float>(0, 0);
+    H.at<float>(0, 1) = H_row.at<float>(1, 0);
+    H.at<float>(0, 2) = H_row.at<float>(2, 0);
+    H.at<float>(1, 0) = H_row.at<float>(3, 0);
+    H.at<float>(1, 1) = H_row.at<float>(4, 0);
+    H.at<float>(1, 2) = H_row.at<float>(5, 0);
+    H.at<float>(2, 0) = H_row.at<float>(6, 0);
+    H.at<float>(2, 1) = H_row.at<float>(7, 0);
+    H.at<float>(2, 2) = H_row.at<float>(8, 0);
+
+    H = H / H.at<float>(2, 2);
+    
+    cout << "H 행렬:" << endl;
+    cout << H << endl;
 
 
 
