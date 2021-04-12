@@ -1,11 +1,9 @@
 # **영상 Homography 계산 및 와핑 영상 합성 실습**
----
 6주차 Assignment에 대한 Code 제출물과 간략한 Review를 포함하고 있습니다.  
 자세한 서술과 결과 정리는 Report에 포함되어 있습니다.
 
 
 ## Environment
----
 각 팀원의 개발 및 테스트 환경은 아래와 같습니다.
 | **Name** | **OS** | **OpenCV Library** | **Language** | **IDE** | 
 |:--------:|:--------:|:--------:|:--------:|:--------:|
@@ -14,7 +12,6 @@
 | 이하윤 | Mac OS 11 Big Sur | OpenCV 4.5.1 | C++ | Xcode 12.4 |
 
 ## Run
----
 Code는 OpenCV 4.5.2버전을 통해 개발 및 테스트 되었으며, 원활한 동작을 위해 동일한 버전의 OpenCV를 사용하는 것을 추천드립니다.
 
 ```
@@ -22,13 +19,11 @@ $ g++ main.cpp -o app `pkg-config --cflags --libs opencv`
 ```
 
 ## Sample Result
----
 샘플 결과는 아래와 같습니다. 세부 결과는 Report에서 확인할 수 있습니다.
 ![](result.jpg)
-![](result2.jpg)
 
 ## Code Review
----
+
 ### Header
 OpenCV 함수 이용을 위한 core, highgui, imgproc 헤더 선언
 ```cpp
@@ -39,7 +34,7 @@ OpenCV 함수 이용을 위한 core, highgui, imgproc 헤더 선언
 ```
 
 ### Calculate Homography
-**행렬 A 정의**
+행렬 A 정의
 ```cpp
     /** 호모그래피 계산 **/
     int x1 = get<0>(location01[0]);
@@ -58,23 +53,23 @@ OpenCV 함수 이용을 위한 core, highgui, imgproc 헤더 선언
     
 }
 ```
-**DLT 이용해 Ah = 0 풂**
+DLT 이용해 Ah = 0 풂
 ```cpp
     Mat U, D, VT, V;
 ```
-**h 구하기 위해 행렬 A에 대한 SVD를 구함**
+h 구하기 위해 행렬 A에 대한 SVD를 구함
 ```cpp
     SVDecomp(A, U, D, VT, SVD::FULL_UV);
 ```
-**행렬 VT를 전치해 V 획득**
+행렬 VT를 전치해 V 획득
 ```cpp
     transpose(VT, V);
 ```
-**h(9X1)는 행렬 V의 오른쪽 끝 Row 벡터**
+h(9X1)는 행렬 V의 오른쪽 끝 Row 벡터
 ```cpp
     Mat H_row = V.col(8);
 ```
-**열 벡터 형태의 h를 3X3 사이즈의 H 행렬로 전환**
+열 벡터 형태의 h를 3X3 사이즈의 H 행렬로 전환
 ```cpp
     Mat H = Mat::ones(3, 3, CV_32F);
     H.at<float>(0, 0) = H_row.at<float>(0, 0);
@@ -91,7 +86,7 @@ OpenCV 함수 이용을 위한 core, highgui, imgproc 헤더 선언
 ```
 
 ### 후방기하변환
-**Target 이미지의 pixel이 Source 이미지에 어느 위치에 존재하는지 계산**
+Target 이미지의 pixel이 Source 이미지에 어느 위치에 존재하는지 계산
 ```cpp
     for (int y = 0; y < img2.rows; y++) {
         for (int x = 0; x < img2.cols; x++) {
@@ -109,13 +104,13 @@ OpenCV 함수 이용을 위한 core, highgui, imgproc 헤더 선언
 
 ```
 
-**후방 변환만 수행**
+후방 변환만 수행
 ```cpp
                 dst2.at<Vec3b>(y, x)[0] = src.at<Vec3b>(pixel_y, pixel_x)[0]; // 3채널의 B, G, R pixel 값을 각각 수정
                 dst2.at<Vec3b>(y, x)[1] = src.at<Vec3b>(pixel_y, pixel_x)[1];
                 dst2.at<Vec3b>(y, x)[2] = src.at<Vec3b>(pixel_y, pixel_x)[2];
 ```
-**후방 변환 + 양선형 보간 수행**
+후방 변환 + 양선형 보간 수행
 ```cpp
                 if (pixel_y < img2.rows - 1 && pixel_x < img2.cols - 1) {
                     // 인접한 두 픽셀과의 거리 계산
