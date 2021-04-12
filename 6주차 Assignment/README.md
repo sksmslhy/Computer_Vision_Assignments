@@ -85,7 +85,7 @@ h(9X1)는 행렬 V의 오른쪽 끝 Row 벡터
     H = H / H.at<float>(2, 2);
 ```
 
-### 후방기하변환
+### Geometry transformation with anti-aliasing (target to source)
 Target 이미지의 pixel이 Source 이미지에 어느 위치에 존재하는지 계산
 ```cpp
     for (int y = 0; y < img2.rows; y++) {
@@ -104,12 +104,14 @@ Target 이미지의 pixel이 Source 이미지에 어느 위치에 존재하는�
 
 ```
 
-후방 변환만 수행
+후방 변환 수행
 ```cpp
                 dst2.at<Vec3b>(y, x)[0] = src.at<Vec3b>(pixel_y, pixel_x)[0]; // 3채널의 B, G, R pixel 값을 각각 수정
                 dst2.at<Vec3b>(y, x)[1] = src.at<Vec3b>(pixel_y, pixel_x)[1];
                 dst2.at<Vec3b>(y, x)[2] = src.at<Vec3b>(pixel_y, pixel_x)[2];
 ```
+
+### Bilinear interpolation
 후방 변환 + 양선형 보간 수행
 ```cpp
                 if (pixel_y < img2.rows - 1 && pixel_x < img2.cols - 1) {
