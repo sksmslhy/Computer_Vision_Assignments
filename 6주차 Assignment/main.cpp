@@ -80,10 +80,10 @@ int main() {
 	Mat img2 = imread("img02.jpg", IMREAD_COLOR);
 	resize(img2, img2, Size(img2.cols * 0.2, img2.rows * 0.2));
 
-    Mat src, dst, dst_c;
+    Mat src, dst, dst2;
     img1.copyTo(src);
-    img2.copyTo(dst);
-    img2.copyTo(dst_c);
+    img2.copyTo(dst); // 후방변환 + 양선형 보간
+    img2.copyTo(dst2); // 후방변환만
 
     // src Window
     namedWindow("img01");
@@ -239,14 +239,13 @@ int main() {
 
                 // Target 이미지의 픽셀 값 수정
                 
-                /** 후방 변환 코드 **/
-                /*
-                dst.at<Vec3b>(y, x)[0] = src.at<Vec3b>(pixel_y, pixel_x)[0]; // 3채널의 B, G, R pixel 값을 각각 수정
-                dst.at<Vec3b>(y, x)[1] = src.at<Vec3b>(pixel_y, pixel_x)[1];
-                dst.at<Vec3b>(y, x)[2] = src.at<Vec3b>(pixel_y, pixel_x)[2];
-                */
+                /** 후방 변환만 수행하는 코드 **/
+                dst2.at<Vec3b>(y, x)[0] = src.at<Vec3b>(pixel_y, pixel_x)[0]; // 3채널의 B, G, R pixel 값을 각각 수정
+                dst2.at<Vec3b>(y, x)[1] = src.at<Vec3b>(pixel_y, pixel_x)[1];
+                dst2.at<Vec3b>(y, x)[2] = src.at<Vec3b>(pixel_y, pixel_x)[2];
+                
 
-                /** 양선형 보간 코드 **/
+                /** 후방변환 + 양선형 보간 코드 **/
                 if (pixel_y < img2.rows - 1 && pixel_x < img2.cols - 1) {
                     // 인접한 두 픽셀과의 거리 계산
                     float a = pixel.at<float>(0, 0) - pixel_x;
@@ -319,8 +318,11 @@ int main() {
     //cout << dst.size << endl;
     //cout << img2.size << endl; 
 
-    imshow("dst", dst);
+    imshow("양선형보간", dst);
+    imshow("후방변환", dst2);
+
     imwrite("result.jpg", dst);
+    imwrite("result2.jpg", dst2);
 
     waitKey(0);
     
