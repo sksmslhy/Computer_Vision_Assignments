@@ -20,7 +20,7 @@ $ g++ main.cpp -o app `pkg-config --cflags --libs opencv`
 
 ## Sample Result
 샘플 결과는 아래와 같습니다. 세부 결과는 Report에서 확인할 수 있습니다.  
-<img src = "img02.jpg" width="30%"> <img src = "img01.jpg" width="30%"> <img src = "result.jpg" width="30%"> 
+<img src = "img01.jpg" width="30%"> <img src = "img02.jpg" width="30%"> <img src = "result.jpg" width="30%"> 
 
 ## Code Review
 
