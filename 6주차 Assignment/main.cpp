@@ -251,7 +251,7 @@ int main() {
                     // 인접한 두 픽셀과의 거리 계산
                     float a = pixel.at<float>(0, 0) - pixel_x;
                     float b = pixel.at<float>(1, 0) - pixel_y;
-
+                    
                     // 2차원 보간식 유도
                     // f(y, x)
                     float f_yx_B = src.at<Vec3b>(pixel_y, pixel_x)[0];
@@ -259,42 +259,68 @@ int main() {
                     float f_yx_R = src.at<Vec3b>(pixel_y, pixel_x)[2];
 
                     // f(y,x') = (1-a) f(y,x) + a f(y,x+1)
-                    float f_yx_p_B = (1 - a) * f_yx_B + a * src.at<Vec3b>(pixel_y, pixel_x + 1)[0];
-                    float f_yx_p_G = (1 - a) * f_yx_G + a * src.at<Vec3b>(pixel_y, pixel_x + 1)[1];
-                    float f_yx_p_R = (1 - a) * f_yx_R + a * src.at<Vec3b>(pixel_y, pixel_x + 1)[2];
+                    float f_yx_p_B = ((1 - a) * f_yx_B) + (a * src.at<Vec3b>(pixel_y, pixel_x + 1)[0]);
+                    float f_yx_p_G = ((1 - a) * f_yx_G) + (a * src.at<Vec3b>(pixel_y, pixel_x + 1)[1]);
+                    float f_yx_p_R = ((1 - a) * f_yx_R) + (a * src.at<Vec3b>(pixel_y, pixel_x + 1)[2]);
 
                     // f(y+1,x') = (1-a) f(y+1, x) + a f(y+1, x+1)
-                    float f_ya_x_p_B = (1 - a) * src.at<Vec3b>(pixel_y + 1, pixel_x)[0] + a * src.at<Vec3b>(pixel_y + 1, pixel_x + 1)[0];
-                    float f_ya_x_p_G = (1 - a) * src.at<Vec3b>(pixel_y + 1, pixel_x)[1] + a * src.at<Vec3b>(pixel_y + 1, pixel_x + 1)[1];
-                    float f_ya_x_p_R = (1 - a) * src.at<Vec3b>(pixel_y + 1, pixel_x)[2] + a * src.at<Vec3b>(pixel_y + 1, pixel_x + 1)[2];
+                    float f_ya_x_p_B = ((1 - a) * src.at<Vec3b>(pixel_y + 1, pixel_x)[0]) + (a * (src.at<Vec3b>(pixel_y + 1, pixel_x + 1)[0]));
+                    float f_ya_x_p_G = ((1 - a) * src.at<Vec3b>(pixel_y + 1, pixel_x)[1]) + (a * (src.at<Vec3b>(pixel_y + 1, pixel_x + 1)[1]));
+                    float f_ya_x_p_R = ((1 - a) * src.at<Vec3b>(pixel_y + 1, pixel_x)[2]) + (a * (src.at<Vec3b>(pixel_y + 1, pixel_x + 1)[2]));
 
                     // f(y', x') = (1-b) f(y, x') + b f(y+1, x')
-                    float f_y_p_x_p_B = (1 - b) * f_yx_p_B + b * f_ya_x_p_B;
-                    float f_y_p_x_p_G = (1 - b) * f_yx_p_G + b * f_ya_x_p_G;
-                    float f_y_p_x_p_R = (1 - b) * f_yx_p_R + b * f_ya_x_p_R;
+                    float f_y_p_x_p_B = ((1 - b) * f_yx_p_B) + (b * f_ya_x_p_B);
+                    float f_y_p_x_p_G = ((1 - b) * f_yx_p_G) + (b * f_ya_x_p_G);
+                    float f_y_p_x_p_R = ((1 - b) * f_yx_p_R) + (b * f_ya_x_p_R);
 
-                    dst.at<Vec3b>(y, x)[0] = cvRound(f_y_p_x_p_B); // 3채널의 B, G, R pixel 값을 각각 수정
+
+
+                    /*  (0~255) 값을 벗어나는 경우를 고려하지 못하는 교체                    
+                    dst.at<Vec3b>(y, x)[0] = cvRound(f_y_p_x_p_B);
                     dst.at<Vec3b>(y, x)[1] = cvRound(f_y_p_x_p_G);
                     dst.at<Vec3b>(y, x)[2] = cvRound(f_y_p_x_p_R);
+                    */
+
+                    // (0~255) 값을 벗어나는 경우 0, 255로 값 고정
+                    if (cvRound(f_y_p_x_p_B) > 255)
+                        dst.at<Vec3b>(y, x)[0] = 255;
+                    else if (cvRound(f_y_p_x_p_B) < 0)
+                        dst.at<Vec3b>(y, x)[0] = 0;
+                    else
+                        dst.at<Vec3b>(y, x)[0] = cvRound(f_y_p_x_p_B);
+
+                    if (cvRound(f_y_p_x_p_G) > 255)
+                        dst.at<Vec3b>(y, x)[1] = 255;
+                    else if (cvRound(f_y_p_x_p_G) < 0)
+                        dst.at<Vec3b>(y, x)[1] = 0;
+                    else
+                        dst.at<Vec3b>(y, x)[1] = cvRound(f_y_p_x_p_G);
+
+                    if (cvRound(f_y_p_x_p_R) > 255)
+                        dst.at<Vec3b>(y, x)[2] = 255;
+                    else if (cvRound(f_y_p_x_p_R) < 0)
+                        dst.at<Vec3b>(y, x)[2] = 0;
+                    else
+                        dst.at<Vec3b>(y, x)[2] = cvRound(f_y_p_x_p_R);
+
                 }
+                // 오른쪽, 아래 모서리의 경우 보간 이용하지 않고 기존 Source 이미지의 픽셀 그대로 이용
                 else {
                     dst.at<Vec3b>(y, x)[0] = src.at<Vec3b>(pixel_y, pixel_x)[0]; // 3채널의 B, G, R pixel 값을 각각 수정
                     dst.at<Vec3b>(y, x)[1] = src.at<Vec3b>(pixel_y, pixel_x)[1];
                     dst.at<Vec3b>(y, x)[2] = src.at<Vec3b>(pixel_y, pixel_x)[2];
                 }
-                
-
             }
         }
     }
     
-    cout << dst.type() << endl;
+    //cout << dst.type() << endl;
     
-    cout << dst.size << endl;
-    cout << img2.size << endl;
+    //cout << dst.size << endl;
+    //cout << img2.size << endl; 
 
     imshow("dst", dst);
-
+    imwrite("result.jpg", dst);
 
     waitKey(0);
     
