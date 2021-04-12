@@ -80,7 +80,8 @@ int main() {
 	Mat img2 = imread("img02.jpg", IMREAD_COLOR);
 	resize(img2, img2, Size(img2.cols * 0.2, img2.rows * 0.2));
 
-    Mat dst, dst_c;
+    Mat src, dst, dst_c;
+    img1.copyTo(src);
     img2.copyTo(dst);
     img2.copyTo(dst_c);
 
@@ -235,9 +236,9 @@ int main() {
                 //cout << "pixel x : " << to_string(pixel_x) << endl;
                 //cout << "pixel y : " << to_string(pixel_y) << endl;
 
-                dst.at<Vec3b>(y, x)[0] = img1.at<Vec3b>(pixel_y, pixel_x)[0]; // 3채널의 B, G, R pixel 값을 각각 수정
-                dst.at<Vec3b>(y, x)[1] = img1.at<Vec3b>(pixel_y, pixel_x)[1];
-                dst.at<Vec3b>(y, x)[2] = img1.at<Vec3b>(pixel_y, pixel_x)[2];
+                dst.at<Vec3b>(y, x)[0] = src.at<Vec3b>(pixel_y, pixel_x)[0]; // 3채널의 B, G, R pixel 값을 각각 수정
+                dst.at<Vec3b>(y, x)[1] = src.at<Vec3b>(pixel_y, pixel_x)[1];
+                dst.at<Vec3b>(y, x)[2] = src.at<Vec3b>(pixel_y, pixel_x)[2];
 
             }
         }
