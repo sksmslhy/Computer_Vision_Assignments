@@ -23,8 +23,8 @@ void CallBackFunc01(int event, int x, int y, int flags, void* param)
         tuple<int, int> location = make_tuple(x, y);
         location01[count01] = location;
 
-        int rect_width = 20; //*** 여기 상자 사이즈 수정 ***
-        int rect_height = 20; //*** 여기 상자 사이즈 수정 ***
+        int rect_width = 20;
+        int rect_height = 20;
         rectangle(img, Point(x - rect_width / 2, y - rect_height / 2), Point(x + rect_width / 2, y + rect_height / 2), Scalar(0, 255, 0), 2, 1, 0);
         putText(img, to_string(count01), Point(x, y + 40), 0, 0.75, Scalar(255, 255, 255), 2, 1);
         imshow("img01", img);
@@ -80,6 +80,10 @@ int main() {
 	Mat img2 = imread("img02.jpg", IMREAD_COLOR);
 	resize(img2, img2, Size(img2.cols * 0.2, img2.rows * 0.2));
 
+    Mat dst, dst_c;
+    img2.copyTo(dst);
+    img2.copyTo(dst_c);
+
     // src Window
     namedWindow("img01");
     setMouseCallback("img01", CallBackFunc01, &img1);
@@ -95,22 +99,29 @@ int main() {
     /** 호모그래피 계산 **/
     int x1 = get<0>(location01[0]);
     int y1 = get<1>(location01[0]);
+
     int x2 = get<0>(location01[1]);
     int y2 = get<1>(location01[1]);
+
     int x3 = get<0>(location01[2]);
     int y3 = get<1>(location01[2]);
+
     int x4 = get<0>(location01[3]);
     int y4 = get<1>(location01[3]);
 
     int x1_p = get<0>(location02[0]);
     int y1_p = get<1>(location02[0]);
+
     int x2_p = get<0>(location02[1]);
     int y2_p = get<1>(location02[1]);
+
     int x3_p = get<0>(location02[2]);
     int y3_p = get<1>(location02[2]);
+
     int x4_p = get<0>(location02[3]);
     int y4_p = get<1>(location02[3]);
     
+    // 행렬 A 정의
     Mat A = Mat::zeros(8, 9, CV_32F);
     A.at<float>(0, 0) = -x1;
     A.at<float>(0, 1) = -y1;
@@ -168,7 +179,7 @@ int main() {
     A.at<float>(7, 7) = y4 * y4_p;
     A.at<float>(7, 8) = y4_p;
 
-
+    cout << A << endl;
     // DLT 이용 -> Ah = 0 을 푸는 문제
     Mat U, D, VT, V;
 
@@ -182,7 +193,7 @@ int main() {
     Mat H_row = V.col(8);
     
     // 열 벡터 형태의 h를 3X3 사이즈의 H 행렬로 전환
-    Mat H = Mat::zeros(3, 3, CV_32F);
+    Mat H = Mat::ones(3, 3, CV_32F);
     H.at<float>(0, 0) = H_row.at<float>(0, 0);
     H.at<float>(0, 1) = H_row.at<float>(1, 0);
     H.at<float>(0, 2) = H_row.at<float>(2, 0);
@@ -199,7 +210,48 @@ int main() {
     cout << H << endl;
 
 
+    // Target 이미지의 pixel이 Source 이미지에 어느 위치에 존재하는지 계산 (후방 기하 변환)
+    for (int y = 0; y < img2.rows; y++) {
+        for (int x = 0; x < img2.cols; x++) {
+
+            // Homogeneous Coordinate 이용
+            Mat pixel_p = Mat::ones(3, 1, CV_32F);
+            pixel_p.at<float>(0, 0) = x;
+            pixel_p.at<float>(1, 0) = y;
+            
+            // H의 역행렬을 통해 X -> X' 변환
+            Mat pixel = Mat::ones(3, 3, CV_32F);
+            pixel = H.inv() * pixel_p;
+            pixel = pixel / pixel.at<float>(2, 0);
+
+            // CV32F 를 8bit U 정수로 변환
+            int pixel_x = cvRound(pixel.at<float>(0, 0));
+            int pixel_y = cvRound(pixel.at<float>(1, 0));
+            
+
+            // 변환된 픽셀이 Source 이미지 안에 있는지 검사
+            if ((pixel_x > 0) && (pixel_x < img1.cols) && (pixel_y > 0) && (pixel_y < img1.rows)) {
+                //cout << pixel << endl;
+                //cout << "pixel x : " << to_string(pixel_x) << endl;
+                //cout << "pixel y : " << to_string(pixel_y) << endl;
+
+                dst.at<Vec3b>(y, x)[0] = img1.at<Vec3b>(pixel_y, pixel_x)[0]; // 3채널의 B, G, R pixel 값을 각각 수정
+                dst.at<Vec3b>(y, x)[1] = img1.at<Vec3b>(pixel_y, pixel_x)[1];
+                dst.at<Vec3b>(y, x)[2] = img1.at<Vec3b>(pixel_y, pixel_x)[2];
+
+            }
+        }
+    }
+    
+    cout << dst.type() << endl;
+    
+    cout << dst.size << endl;
+    cout << img2.size << endl;
+
+    imshow("dst", dst);
 
 
+    waitKey(0);
+    
 	return 0;
 }
