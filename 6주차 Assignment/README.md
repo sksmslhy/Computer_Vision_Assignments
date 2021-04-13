@@ -85,7 +85,7 @@ h(9X1)는 행렬 V의 오른쪽 끝 Row 벡터
     H = H / H.at<float>(2, 2);
 ```
 
-### Geometry transformation with anti-aliasing (target to source)
+### Backward mapping for anti-aliasing (target to source)
 Target 이미지의 pixel이 Source 이미지에 어느 위치에 존재하는지 계산
 ```cpp
     for (int y = 0; y < img2.rows; y++) {
