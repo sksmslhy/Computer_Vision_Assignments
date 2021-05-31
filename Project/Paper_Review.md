@@ -3,9 +3,9 @@
 
 
 ## Introduction  
-![intro1](./src/intro1.png)
+![intro1](./src/Intro1.png)
 
-![intro2](./src/intro2.png) 
+![intro2](./src/Intro2.png) 
 
 * Contribution  
   * **한 장의 이미지**로부터 새로운 이미지를 생성하는 방법 제시
@@ -21,7 +21,7 @@
 ## Method  
 ### 1. Multi-Scale architecture
 핵심 아이디어!  
-![multi scale generator](./src/multi_scale_generation.png)
+<p align="center"><image src = "./src/multi_scale_pipeline.png"></p>
 
 * Scale factor
   * 단계별로 3/4 정도의 차이
@@ -54,11 +54,11 @@
 
 
 
-### 2. Network architecture (Generator)
-![single scale generator](/.src/single_scale_generation.png)
+### 2. Network architecture (Generator)  
+<p align="center"><image src = "./src/single_scale_generation.png"></p>
 
 Generator의 Operation :  
-![operation](./src/operation.png)
+ <p align="center"><image src = "./src/operation.png" width=47%></p>
 
 * Convolution Layer 5번 반복
   * 각 layer는 Conv(3 x 3) - BatchNorm - LeakyReLU 구조를 따름
@@ -78,8 +78,8 @@ Generator는 동시에 1. 업스케일하면서 2. 생성한다.
 
 
 ### 3. Training  
-![loss1](./src/loss1.png)
-![loss2](./src/loss2.png)
+<p align="center"><image src = "./src/loss1.png"></p>
+<p align="center"><image src = "./src/loss2.png"></p>
 
 * Loss Function
   * adversarial loss와 reconstruction loss 사용
