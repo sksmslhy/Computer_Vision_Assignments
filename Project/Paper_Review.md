@@ -3,9 +3,9 @@
 
 
 ## Introduction  
-<image src = "https://github.com/tamarott/SinGAN/raw/master/imgs/teaser.PNG">
+![intro1](./src/intro1.png)
 
-<image src = "https://github.com/tamarott/SinGAN/raw/master/imgs/manipulation.PNG">   
+![intro2](./src/intro2.png) 
 
 * Contribution  
   * **한 장의 이미지**로부터 새로운 이미지를 생성하는 방법 제시
@@ -21,7 +21,7 @@
 ## Method  
 ### 1. Multi-Scale architecture
 핵심 아이디어!  
-<image src = "https://user-images.githubusercontent.com/37301677/103351751-87bad000-4ae7-11eb-9475-45d635d9a05a.PNG">
+![multi scale generator](./src/multi_scale_generation.png)
 
 * Scale factor
   * 단계별로 3/4 정도의 차이
@@ -55,10 +55,10 @@
 
 
 ### 2. Network architecture (Generator)
-<image src = "https://user-images.githubusercontent.com/37301677/103351756-88ebfd00-4ae7-11eb-95c4-0f7aa5bc7e5e.PNG">
+![single scale generator](/.src/single_scale_generation.png)
 
-Generator의 Operation : 
-<image src = "https://user-images.githubusercontent.com/37301677/103352526-c3ef3000-4ae9-11eb-84a3-03685d9fdfa3.PNG" width=40%>
+Generator의 Operation :  
+![operation](./src/operation.png)
 
 * Convolution Layer 5번 반복
   * 각 layer는 Conv(3 x 3) - BatchNorm - LeakyReLU 구조를 따름
@@ -78,8 +78,8 @@ Generator는 동시에 1. 업스케일하면서 2. 생성한다.
 
 
 ### 3. Training  
-<image src = "https://raw.githubusercontent.com/ppooiiuuyh/assets/master/singan_5.PNG" width=40%>   
-<image src = "https://raw.githubusercontent.com/ppooiiuuyh/assets/master/singan_6.PNG" width=40%>
+![loss1](./src/loss1.png)
+![loss2](./src/loss2.png)
 
 * Loss Function
   * adversarial loss와 reconstruction loss 사용
@@ -94,7 +94,7 @@ Generator는 동시에 1. 업스케일하면서 2. 생성한다.
   * learning rate 0.0005, 1600번째 iteration 때 0.1배
 
 * Boundary conditions and the effect of padding  
-![effect_of_padding](/img/Effect_of_Padding.png)
+![effect_of_padding](./src/effect_of_padding.png)
   * 처음에 (receptive seze / 2)만큼 padding을 주고 Conv layer에서는 padding 사용하지 않음
   * Random patch로 쪼개지 않고 단일 배치고 이미지 전체에 대하여 계산 후 평균을 내 학습
 
