@@ -94,7 +94,8 @@ Generator는 동시에 1. 업스케일하면서 2. 생성한다.
   * learning rate 0.0005, 1600번째 iteration 때 0.1배
 
 * Boundary conditions and the effect of padding  
-![effect_of_padding](./src/effect_of_padding.png)
+<p align="center"><image src = "./src/effect_of_padding.png" width = 90%></p>    
+
   * 처음에 (receptive seze / 2)만큼 padding을 주고 Conv layer에서는 padding 사용하지 않음
   * Random patch로 쪼개지 않고 단일 배치고 이미지 전체에 대하여 계산 후 평균을 내 학습
 
@@ -104,12 +105,14 @@ Generator는 동시에 1. 업스케일하면서 2. 생성한다.
 <p align="center"><image src = "./src/random_generation.png" width = 90%></p>    
 
 ### 2. Effect of scales at test time
-<p align="center"><image src = "./src/effectio_of_scales_at_test_time.png" width=45%></p>    
+<p align="center"><image src = "./src/effectio_of_scales_at_test_time.png" width=45%></p> 
+
 * N > n 인 단계에서는 random noise 대신 fixed z와 reconstructed sample 사용
 * 더 높은 스케일에서 시작할수록 fine detail만이 재생성됨
 
 ### 3. Effect of scales during trainig  
 <p align="center"><image src = "./src/effect_of_scales_during_training.png"></p>  
+
 * 더 적은 단계 (scale factor는 고정 -> 이미지가 축소되는 정도 적음 -> 가장 작은 단계서 receptive field가 커버하는 영역이 더 작음)로 분할할 수 있도록 fine detail만을 재수정
  
  
@@ -124,18 +127,21 @@ Generator는 동시에 1. 업스케일하면서 2. 생성한다.
 ## **Application**
 ### 1. Super-resolution
 <p align="center"><image src = "./src/super_resolution.png" width=90%></p>  
+
 * G0에서 (target scale factor)^(1/num repeat)만큼씩 점진적으로 upscale  
-  * 논문에서는 random noise를 사용하는 것으로 적혀 있으나 reconstucted sample을 만들 때처럼 0값을 사용하는 것이 더 안정적
+  * 논문에서는 random noise를 사용하는 것으로 적혀 있으나 reconstucted sample을 만들 때처럼 0값을 사용하는 것이 더 안정적  
 * reconstruction loss 계수는 100 사용
  
 ### 2. Paint-to-image
 <p align="center"><image src = "./src/paint_to_img.png" width=90%></p>  
-* N-2 나 N-1 정도의 coarse scale 단계에서 generated sample 대신 segment mask를 주입  
+
+* N-2 나 N-1 정도의 coarse scale 단계에서 generated sample 대신 segment mask를 주입   
 * random noise 사용
  
 ### 3. Harmonization  
 <p align="center"><image src = "./src/harmonization.png"></p>
-* 1~3 정도의 fine scale 단계에서 fenerated sample 대신 overlapped image를 주입
+
+* 1~3 정도의 fine scale 단계에서 fenerated sample 대신 overlapped image를 주입  
 * random noise 사용
  
 ### 4. Editing
